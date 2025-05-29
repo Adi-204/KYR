@@ -113,11 +113,17 @@ export default function McqTest({ resumeUrl }: { resumeUrl: string }) {
       return {
         questionIndex: index,
         question: question.question,
+        options: question.options,
         userAnswer: userAnswer || null,
         correctAnswer: question.correctAnswer,
         isCorrect,
       }
     })
+    localStorage.removeItem('mcqResults');
+    localStorage.setItem('mcqResults', JSON.stringify({
+      results: results,
+      score
+    }))
     router.push("/test/written")
   }
 

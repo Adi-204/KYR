@@ -2,40 +2,23 @@
 
 import { useEffect, useRef, useState } from "react"
 import CameraFeed, { CameraFeedHandle } from "./CameraFeed"
+import { useTestSetup } from "@/app/hooks/useTestSetup"
 
 export default function ProctoredCamera() {
-  const [videoStream, setVideoStream] = useState<MediaStream | null>(null)
+  const { handleShareVideo, videoStreamRef } = useTestSetup();
   const cameraRef = useRef<CameraFeedHandle>(null)
 
   useEffect(() => {
-    const initCamera = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true
-        })
-        setVideoStream(stream)
-      } catch (error) {
-        console.error("Camera access error:", error)
-      }
-    }
-
-    initCamera()
-
-    return () => {
-      if (cameraRef.current) {
-        cameraRef.current.stopCamera()
-      }
-    }
+    handleShareVideo()
   }, [])
 
-  if (!videoStream) return null
+  if (!videoStreamRef || !videoStreamRef.current) return null
 
   return (
     <div className="fixed bottom-4 right-4 z-[1000]">
-      <CameraFeed 
+      <CameraFeed
         ref={cameraRef}
-        videoStream={videoStream}
+        videoStream={videoStreamRef.current!}
       />
     </div>
   )

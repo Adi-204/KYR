@@ -2,10 +2,12 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, FileText, Star, BarChart3, Bot, ArrowRight, Menu } from "lucide-react"
+import Navbar from "@/components/Navbar"
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
+      <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">

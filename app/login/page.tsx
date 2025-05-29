@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import LoginForm from "./LoginForm"
+import Navbar from "@/components/Navbar"
 
 export const metadata: Metadata = {
   title: "Login | Know Your Resume",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div>
+      <Navbar />
       <LoginForm />
     </div>
   )

@@ -37,17 +37,12 @@ export default function LoginForm() {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Store the token (you might want to use httpOnly cookies instead)
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-      }
-
       toast.success("Login successful", {
         description: "Welcome back!",
       });
 
-      router.push('/dashboard');
-
+      router.push('/');
+      
     } catch (error: any) {
       toast.error("Login failed", {
         description: error.message,

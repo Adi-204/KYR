@@ -32,10 +32,7 @@ export default function Navbar() {
               <Link href="/test" className="text-sm font-medium transition-colors hover:text-primary">
                 Test
               </Link>
-              <Link href="/resume-score" className="text-sm font-medium transition-colors hover:text-primary">
-                Resume Score
-              </Link>
-              <Link href="/ai-review" className="text-sm font-medium transition-colors hover:text-primary">
+              <Link href="/review" className="text-sm font-medium transition-colors hover:text-primary">
                 AI Review
               </Link>
             </nav>

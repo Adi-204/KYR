@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import PreparationTime from "@/components/PreparationTime"
 import { Textarea } from "@/components/ui/textarea"
+import { useTestSetup } from "@/app/hooks/useTestSetup"
 
 interface Question {
   question: string
@@ -15,6 +16,13 @@ interface Question {
 
 interface GeminiApiResponse {
   written: Question[]
+}
+
+interface WrittenResult {
+  question: string
+  answer: string
+  score: number
+  feedback: string
 }
 
 type Section = "A" | "B"
@@ -31,6 +39,8 @@ export default function WrittenTest({ resumeUrl }: { resumeUrl: string }) {
   const [error, setError] = useState<string | null>(null)
   const [timeLeft, setTimeLeft] = useState(WRITTEN_TEST_DURATION)
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const { cleanupMedia } = useTestSetup()
 
   useEffect(() => {
     const fetchGeminiData = async () => {
@@ -110,19 +120,35 @@ export default function WrittenTest({ resumeUrl }: { resumeUrl: string }) {
   const handleFinishTest = async () => {
     setIsSubmitting(true)
     try {
-      const response = await fetch("/api/test/written/submit", {
+      const questionAnswerPairs = questions.map((q, index) => ({
+        question: q.question,
+        answer: answers[index] || ""
+      }))
+      const response = await fetch("/api/gemini/written/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          answers,
-          questions,
-          timeTaken: WRITTEN_TEST_DURATION - timeLeft,
+          questionAnswerPairs,
         }),
       })
       if (!response.ok) {
         throw new Error("Failed to submit answers")
       }
-      router.push("/test/results")
+      const data = await response.json();
+      const results: WrittenResult[] = data.results;
+      console.log(results);
+      let score = 0;
+      results.forEach(element => {
+        score += element.score;
+      });
+      localStorage.removeItem('writtenResults');
+      localStorage.setItem('writtenResults', JSON.stringify({
+          results: results,
+          score
+        }
+      ));
+      await cleanupMedia();
+      router.push("/test/results");
     } catch (error) {
       console.error("Error submitting answers:", error)
     } finally {
