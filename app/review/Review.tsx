@@ -106,8 +106,8 @@ export default function Review() {
   if (Object.keys(review).length > 0) {
     return <ReviewResults review={review} />;
   }
-  
-  if(loadingReview){
+
+  if (loadingReview) {
     return <ReviewLoader />
   }
 
@@ -253,11 +253,14 @@ export default function Review() {
       <div className="bg-muted/50 rounded-lg p-6 space-y-4">
         <h3 className="font-semibold text-lg">What You'll Get:</h3>
         <ul className="space-y-3 list-disc pl-5">
-          <li>ATS compatibility score</li>
+          <li>AI compatibility score</li>
           <li>Keyword optimization suggestions</li>
           <li>Formatting and structure analysis</li>
-          <li>Impact measurement of your bullet points</li>
-          <li>Personalized improvement recommendations</li>
+          <li>Content quality and experience relevance feedback</li>
+          <li>
+            Personalized improvement recommendations: add proficiency levels to your skills section for clarity, quantify achievements in projects to demonstrate impact, and customize your resume for each job application to emphasize relevant skills and experience.
+          </li>
+          <li>Strengths highlighted: Comprehensive technical skills, quantifiable achievements, and clear structure with external profile links.</li>
         </ul>
       </div>
     </div>

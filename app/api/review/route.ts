@@ -328,7 +328,6 @@ Give me overall strengths, areas for improvement, and actionable suggestions, an
       console.error("Failed to parse review:", e);
     }
 
-    console.log(parsedReview);
     return NextResponse.json({
       resumeReview: parsedReview
     });
