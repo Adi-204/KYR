@@ -2,8 +2,6 @@
 
 Know Your Resume is an AI-powered resume analysis and assessment platform built with Next.js. It provides instant, actionable feedback, MCQ and written tests, and detailed scoring to help job seekers optimize their resumes and prepare for interviews.
 
----
-
 ## 🚀 Tech Stack
 
 - **Frontend:** Next.js (App Router), React, TypeScript, Tailwind CSS
@@ -13,8 +11,6 @@ Know Your Resume is an AI-powered resume analysis and assessment platform built 
 - **State Management:** React Hooks
 - **Other:** Cloudinary (for resume PDF storage), Vercel (deployment)
 
----
-
 ## ✨ Features
 
 - **AI Resume Review:** Upload your resume (PDF) and get a detailed, section-wise analysis with strengths, critiques, and improvement suggestions.
@@ -23,8 +19,6 @@ Know Your Resume is an AI-powered resume analysis and assessment platform built 
 - **Instant Feedback:** Scores and actionable feedback for each test and resume section.
 - **Proctored Environment:** Camera-based proctoring for test integrity.
 - **User Authentication:** Secure login and registration.
-
----
 
 ## 🛠️ Getting Started
 
@@ -56,11 +50,8 @@ Know Your Resume is an AI-powered resume analysis and assessment platform built 
 
 5. **Open [http://localhost:3000](http://localhost:3000) in your browser.**
 
----
-
 ## 🧩 Project Structure
 
-```
 app/
   api/                # API routes (AI, resume upload, review, etc.)
   hooks/              # Custom React hooks
@@ -71,8 +62,6 @@ app/
 components/           # Reusable UI components
 public/               # Static assets
 ```
-
----
 
 ## 📝 Contributing
 
@@ -91,18 +80,12 @@ We welcome contributions! Please follow these steps:
    ```
 5. **Open a Pull Request** on GitHub
 
----
-
 ## 📄 License
 
 This project is licensed under the MIT License.
 
----
-
 ## 📬 Contact
 
 For questions, suggestions, or support, open an issue or email [boghawalaadi@gmail.com].
-
----
 
 **Happy job hunting!**
