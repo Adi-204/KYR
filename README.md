@@ -51,7 +51,7 @@ Know Your Resume is an AI-powered resume analysis and assessment platform built 
 5. **Open [http://localhost:3000](http://localhost:3000) in your browser.**
 
 ## 🧩 Project Structure
-
+```
 app/
   api/                # API routes (AI, resume upload, review, etc.)
   hooks/              # Custom React hooks
