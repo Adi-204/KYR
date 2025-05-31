@@ -62,15 +62,11 @@ export default function RegisterForm() {
         throw new Error(data.message || 'Registration failed');
       }
 
-       if (data.token) {
-        localStorage.setItem('token', data.token);
-      }
-
       toast.success("Registration successful!", {
         description: "Your account has been created",
       });
 
-      router.push('/dashboard');
+      router.push('/');
       
     } catch (error: any) {
       toast.error("Registration failed", {
@@ -84,7 +80,7 @@ export default function RegisterForm() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <div className="flex min-h-screen flex-col items-center justify-center md:flex-row">
-        {/* Left side - Fun facts (same as login) */}
+
         <div className="hidden w-full max-w-md flex-col justify-center space-y-6 p-8 md:flex md:p-10 lg:p-12">
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight">Create your account</h1>
@@ -136,7 +132,6 @@ export default function RegisterForm() {
           </div>
         </div>
 
-        {/* Right side - Registration form */}
         <div className="flex w-full max-w-md flex-col justify-center p-8 md:p-10 lg:p-12">
           <Card className="border-none shadow-none bg-background/60">
             <CardHeader className="space-y-1 md:hidden">
@@ -201,7 +196,6 @@ export default function RegisterForm() {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    // minLength={8}
                   />
                 </div>
                 <div className="space-y-2">
@@ -213,7 +207,6 @@ export default function RegisterForm() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     required
-                    // minLength={8}
                   />
                 </div>
                 <Button className="w-full" type="submit" disabled={isLoading}>
@@ -232,7 +225,7 @@ export default function RegisterForm() {
                 <Button 
                   variant="outline" 
                   className="w-full"
-                  onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+                  onClick={() => signIn('google', { callbackUrl: '/' })}
                 >
                   <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                     <path

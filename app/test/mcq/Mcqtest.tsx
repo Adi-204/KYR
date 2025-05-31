@@ -7,12 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import PreparationTime from "@/components/PreparationTime"
-
-interface Question {
-  question: string
-  options: string[]
-  correctAnswer: string
-}
+import { Question } from "@/app/types/questions"
 
 interface GeminiApiResponse {
   mcqs: Question[]
@@ -20,7 +15,7 @@ interface GeminiApiResponse {
 
 type Section = "A" | "B"
 
-const MCQ_TEST_DURATION = 600
+const MCQ_TEST_DURATION = 1200;
 
 export default function McqTest({ resumeUrl }: { resumeUrl: string }) {
   const router = useRouter()
@@ -239,7 +234,7 @@ export default function McqTest({ resumeUrl }: { resumeUrl: string }) {
                         <ChevronRight className="h-4 w-4" />
                       </>
                     ) : (
-                      "Submit Test"
+                      "Submit"
                     )}
                   </Button>
                 </div>

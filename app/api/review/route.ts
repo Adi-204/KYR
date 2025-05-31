@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI, Type } from "@google/genai";
-import fetch from 'node-fetch'; // Keep if fetching PDF, remove if not.
+import fetch from 'node-fetch'; 
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 

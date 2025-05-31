@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { GoogleGenAI, createUserContent, createPartFromUri, Type } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import fetch from 'node-fetch';
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });

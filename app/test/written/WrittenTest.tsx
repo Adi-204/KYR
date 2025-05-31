@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress"
 import PreparationTime from "@/components/PreparationTime"
 import { Textarea } from "@/components/ui/textarea"
 import { useTestSetup } from "@/app/hooks/useTestSetup"
+import { WrittenResult } from "@/app/types/results"
 
 interface Question {
   question: string
@@ -18,16 +19,9 @@ interface GeminiApiResponse {
   written: Question[]
 }
 
-interface WrittenResult {
-  question: string
-  answer: string
-  score: number
-  feedback: string
-}
-
 type Section = "A" | "B"
 
-const WRITTEN_TEST_DURATION = 600
+const WRITTEN_TEST_DURATION = 1500
 
 export default function WrittenTest({ resumeUrl }: { resumeUrl: string }) {
   const router = useRouter()

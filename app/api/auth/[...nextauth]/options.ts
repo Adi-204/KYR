@@ -30,10 +30,7 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider === "google") {
         try {
           await dbConnect();
-          console.log("Attempting to find/create user:", user.email);
-
           const existingUser = await User.findOne({ email: user.email });
-
           if (!existingUser) {
             const newUser = await User.create({
               email: user.email,
@@ -41,10 +38,8 @@ export const authOptions: NextAuthOptions = {
               lastName: profile?.name || user.name?.split(' ')[1] || '',
               provider: 'google'
             });
-            console.log("New user created:", newUser);
             user.id = newUser._id.toString();
           } else {
-            console.log("Existing user found:", existingUser);
             user.id = existingUser._id.toString();
           }
         } catch (error) {
@@ -67,7 +62,6 @@ export const authOptions: NextAuthOptions = {
         await dbConnect();
         const dbUser = await User.findById(token.id);
         if (!dbUser) {
-          console.error("User not found in database!");
           throw new Error("User not found");
         }
       }

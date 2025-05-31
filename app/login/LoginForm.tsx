@@ -1,4 +1,4 @@
-"use client"; // Add this since we're using hooks
+"use client"; 
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -143,12 +143,6 @@ export default function LoginForm() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
-                    <Link
-                      href="/forgot-password"
-                      className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-                    >
-                      Forgot password?
-                    </Link>
                   </div>
                   <Input
                     id="password"
@@ -174,7 +168,7 @@ export default function LoginForm() {
                 <Button
                   variant="outline"
                   className="w-full"
-                  onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+                  onClick={() => signIn('google', { callbackUrl: '/' })}
                 >
                   <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                     <path

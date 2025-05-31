@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar"
 import TestOverviewCard from "@/components/TestOverviewCard"
 import SetupRequirementsCard from "@/components/SetupRequirementsCard"
 
+
 export default function Instruction() {
   const {
     cameraShared,
@@ -55,7 +56,6 @@ export default function Instruction() {
         {cameraShared && <ProctoredCamera />}
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* Left Side - Platform Info & Instructions */}
             <div className="space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center gap-3">

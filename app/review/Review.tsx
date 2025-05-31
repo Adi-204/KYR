@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { Upload, FileText, Sparkles, Trophy, Clock, BarChart2, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import ReviewResults from "./ReviewResults";

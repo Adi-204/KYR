@@ -5,14 +5,23 @@ import { Button } from "@/components/ui/button"
 import { FileText, Menu } from "lucide-react"
 import { useAuth } from "@/app/hooks/useAuth"
 import { useRouter } from "next/navigation"
+import Loading from "./Loading"
+import { usePathname } from "next/navigation"
 
 export default function Navbar() {
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
+  const pathname = usePathname()
+
+  const ishomePage = pathname === "/";
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" })
     router.push("/login")
+  }
+
+  if(loading && ishomePage){
+    return <Loading />
   }
 
   return (

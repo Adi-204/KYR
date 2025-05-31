@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { CheckCircle, BarChart3, Bot } from "lucide-react"
 
 const FeatureSection = () => {

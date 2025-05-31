@@ -19,9 +19,9 @@ const PreparationTime = ({ section, onFinish }: Props) => {
     A: {
       title: "Multiple Choice Questions",
       shortTitle: "MCQ Section",
-      time: "10 minutes total",
+      time: "20 minutes total",
       timePerQuestion: "2 minutes per question",
-      totalQuestions: "5 Questions",
+      totalQuestions: "10 Questions",
       rules: [
         "Each question has only one correct answer",
         "You cannot return to previous questions once submitted",
@@ -39,9 +39,9 @@ const PreparationTime = ({ section, onFinish }: Props) => {
     B: {
       title: "Written Response Questions",
       shortTitle: "Written Section",
-      time: "15 minutes total",
+      time: "25 minutes total",
       timePerQuestion: "5 minutes per question",
-      totalQuestions: "3 Questions",
+      totalQuestions: "5 Questions",
       rules: [
         "Answer in complete, well-structured sentences",
         "Provide specific examples from your resume and experience",

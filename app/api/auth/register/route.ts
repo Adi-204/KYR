@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET as string,
-      { expiresIn: '7d' }
+      { expiresIn: '7h' }
     );
 
     const cookieStore = await cookies();
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       value: token,
       httpOnly: true,
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 1 week in seconds
+      maxAge: 60 * 60 * 7, 
     });
 
     return NextResponse.json(

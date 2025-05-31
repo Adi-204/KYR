@@ -41,7 +41,6 @@ const UserSchema: Schema = new Schema(
       required: function (this: any): boolean {
         return this.provider === "credentials";
       },
-      // minlength: [8, 'Password must be at least 8 characters'],
       select: false,
     },
     resume: {

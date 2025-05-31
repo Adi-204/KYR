@@ -1,4 +1,3 @@
-// test/mcq/page.tsx
 import type { Metadata } from "next"
 import ProtectedRoute from "@/components/ProtectedRoute"
 import Review from "./Review"
