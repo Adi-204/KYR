@@ -41,7 +41,7 @@ Know Your Resume is an AI-powered resume analysis and assessment platform built 
    ```
 
 3. **Configure environment variables:**
-   - Copy `.env.example` to `.env` and fill in your credentials (Google Gemini API key, Cloudinary, etc.)
+   Copy `.env.example` to `.env` and fill in your credentials (Google Gemini API key, Cloudinary, etc.)
 
 4. **Run the development server:**
    ```sh
@@ -69,11 +69,13 @@ We welcome contributions! Please follow these steps:
 
 1. **Fork the repository**
 2. **Create a new branch:**
+
    ```sh
    git checkout -b feature/your-feature-name
    ```
 3. **Make your changes**
 4. **Commit and push:**
+
    ```sh
    git commit -m "Add your message"
    git push origin feature/your-feature-name
