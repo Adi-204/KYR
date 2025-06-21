@@ -1,7 +1,10 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { useRouter } from "next/navigation"
+
+// Global stream tracking to ensure all streams are cleaned up
+const globalStreams = new Set<MediaStream>()
 
 export function useTestSetup() {
   const router = useRouter()
@@ -15,6 +18,42 @@ export function useTestSetup() {
   const videoStreamRef = useRef<MediaStream | null>(null)
   const screenStreamRef = useRef<MediaStream | null>(null)
 
+  // Helper function to stop and remove stream from global tracking
+  const stopStream = useCallback((stream: MediaStream | null) => {
+    if (stream) {
+      stream.getTracks().forEach(track => {
+        track.stop()
+      })
+      globalStreams.delete(stream)
+    }
+  }, [])
+
+  // Helper function to add stream to global tracking
+  const addStreamToGlobal = useCallback((stream: MediaStream) => {
+    globalStreams.add(stream)
+  }, [])
+
+  // Global cleanup function that stops ALL streams
+  const cleanupAllMedia = useCallback(() => {
+    globalStreams.forEach(stream => {
+      stopStream(stream)
+    })
+    globalStreams.clear()
+    
+    // Exit fullscreen if active
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(err => console.error("Error exiting fullscreen:", err));
+    }
+
+    // Reset local refs
+    videoStreamRef.current = null
+    screenStreamRef.current = null
+    
+    // Reset state
+    setCameraShared(false)
+    setScreenShared(false)
+    setIsFullscreen(false)
+  }, [stopStream])
 
   const toggleFullscreen = async () => {
     try {
@@ -36,20 +75,44 @@ export function useTestSetup() {
     return () => document.removeEventListener('fullscreenchange', handler)
   }, [])
 
+  // Handle page unload/close
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      console.log("Page unloading, cleaning up all media")
+      cleanupAllMedia()
+    }
 
-  const handleShareVideo = async () => {
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [cleanupAllMedia])
+
+  const handleShareVideo = useCallback(async () => {
     try {
       // Stop existing stream if any
       if (videoStreamRef.current) {
-        videoStreamRef.current.getTracks().forEach(track => track.stop())
+        stopStream(videoStreamRef.current)
+        videoStreamRef.current = null
       }
 
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { 
+          width: { ideal: 640 },
+          height: { ideal: 480 },
+          facingMode: 'user'
+        }, 
+        audio: true 
+      })
+      
       videoStreamRef.current = stream
+      addStreamToGlobal(stream)
+      
       stream.getTracks().forEach(track => {
         track.onended = () => {
           setCameraShared(false)
           videoStreamRef.current = null
+          globalStreams.delete(stream)
         }
       })
       setCameraShared(true)
@@ -58,19 +121,24 @@ export function useTestSetup() {
       setCameraShared(false)
       videoStreamRef.current = null
     }
-  }
+  }, [addStreamToGlobal, stopStream])
 
   const handleShareScreen = async () => {
     try {
       if (screenStreamRef.current) {
-        screenStreamRef.current.getTracks().forEach(track => track.stop())
+        stopStream(screenStreamRef.current)
+        screenStreamRef.current = null
       }
       const stream = await navigator.mediaDevices.getDisplayMedia({ video: true })
       screenStreamRef.current = stream
+      addStreamToGlobal(stream)
+      
       stream.getTracks().forEach(track => {
         track.onended = () => {
+          console.log("Screen track ended")
           setScreenShared(false)
           screenStreamRef.current = null
+          globalStreams.delete(stream)
         }
       })
       setScreenShared(true)
@@ -104,19 +172,21 @@ export function useTestSetup() {
   const cleanupMedia = async () => {
     console.log("Cleaning up media...")
     try {
-      console.log("Outside : ", videoStreamRef.current);
+      // Stop all video tracks
       if (videoStreamRef.current) {
-        console.log("Stopping video stream")
-        videoStreamRef.current.getTracks().forEach(track => track.stop())
+        console.log("Stopping video stream tracks")
+        stopStream(videoStreamRef.current)
         videoStreamRef.current = null
       }
 
+      // Stop all screen share tracks
       if (screenStreamRef.current) {
-        console.log("Stopping screen share")
-        screenStreamRef.current.getTracks().forEach(track => track.stop())
+        console.log("Stopping screen share tracks")
+        stopStream(screenStreamRef.current)
         screenStreamRef.current = null
       }
 
+      // Exit fullscreen if active
       if (document.fullscreenElement) {
         console.log("Exiting fullscreen")
         await document.exitFullscreen()
@@ -146,6 +216,7 @@ export function useTestSetup() {
     handleShareScreen,
     uploadResume,
     cleanupMedia,
+    cleanupAllMedia,
     videoStreamRef,
     screenStreamRef,
     router

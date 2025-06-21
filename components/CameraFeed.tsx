@@ -37,11 +37,18 @@ const CameraFeed = forwardRef<CameraFeedHandle, CameraFeedProps>(({ videoStream,
     }));
 
     useEffect(() => {
-        if (videoRef.current) {
+        if (videoRef.current && videoStream) {
             videoRef.current.srcObject = videoStream;
             videoRef.current.play().catch((err) => {
                 console.warn('Autoplay failed:', err);
             });
+            
+            return () => {
+                if(videoRef.current) {
+                    videoRef.current.pause();
+                    videoRef.current.srcObject = null;
+                }
+            };
         }
     }, [videoStream]);
 
@@ -98,6 +105,7 @@ const CameraFeed = forwardRef<CameraFeedHandle, CameraFeedProps>(({ videoStream,
                     border: '2px solid black',
                     borderRadius: '8px',
                     pointerEvents: 'none',
+                    backgroundColor: '#000',
                 }}
             />
         </div>

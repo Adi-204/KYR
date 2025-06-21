@@ -34,7 +34,9 @@ export default function WrittenTest({ resumeUrl }: { resumeUrl: string }) {
   const [timeLeft, setTimeLeft] = useState(WRITTEN_TEST_DURATION)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const { cleanupMedia } = useTestSetup()
+  const { cleanupAllMedia } = useTestSetup()
+
+  // Note: Removed cleanup effect on unmount to prevent premature cleanup during test
 
   useEffect(() => {
     const fetchGeminiData = async () => {
@@ -141,7 +143,7 @@ export default function WrittenTest({ resumeUrl }: { resumeUrl: string }) {
           score
         }
       ));
-      await cleanupMedia();
+      await cleanupAllMedia();
       router.push("/test/results");
     } catch (error) {
       console.error("Error submitting answers:", error)

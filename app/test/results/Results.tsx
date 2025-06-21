@@ -7,9 +7,13 @@ import { ScoreSummary } from "@/components/ScoreSummary"
 import { McqResultsSection } from "@/components/McqResultsSection"
 import { WrittenResultsSection } from "@/components/WrittenResultsSection"
 import { TestResults } from "@/app/types/results"
+import { useTestSetup } from "@/app/hooks/useTestSetup"
 
 export default function Results() {
   const [results, setResults] = useState<TestResults | null>(null)
+  const { cleanupAllMedia } = useTestSetup()
+
+  // Note: Removed cleanup on mount - cleanup should only happen when test actually ends
 
   useEffect(() => {
     const mcqResults = localStorage.getItem("mcqResults")
@@ -22,6 +26,14 @@ export default function Results() {
       })
     }
   }, [])
+
+  // Cleanup effect when component unmounts (user navigates away from results)
+  useEffect(() => {
+    return () => {
+      console.log("Results: Component unmounting, cleaning up media")
+      cleanupAllMedia()
+    }
+  }, [cleanupAllMedia])
 
   if (!results) {
     return <Loading />
